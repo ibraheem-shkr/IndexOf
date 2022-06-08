@@ -9,6 +9,7 @@ namespace indexOf
             Console.WriteLine("Hello World!");
             const string input = "ahmad";
 
+            // TEST
             string subtext = "h";
             Console.WriteLine(input + "/" + subtext + "\t\t" +IndexOf(input, subtext));
 
