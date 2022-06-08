@@ -19,26 +19,51 @@ namespace indexOf
             subtext = "y";
             Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
 
-            subtext = "ahmadi";
+            subtext = "aaab";
             Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
+
+            subtext = "ahmad";
+            Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
+
+            subtext = null;
+            Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
+
+            subtext = "hmad";
+            Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
+
+            subtext = "d";
+            Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
+
 
         }
 
 
         public static int IndexOf(string text, string subText)
         {
-            if (subText.Length > text.Length) return -1;
-            for (int i = 0; i < text.Length && i < (text.Length - subText.Length +1); i++)
+            try
             {
-                for (var q = 0; q < subText.Length; q++)
+                if (subText.Length > text.Length) return -1;
+                if (text == subText) return 0;
+            }
+            catch (NullReferenceException exception)
+            {
+                Console.WriteLine(exception.Message);
+                return -1;
+            }
+
+            // if the textIndex reaches this point no need to continue, since the subText won't match anyway because there is no room for "subText" to exist within "text"
+            int outOfBoundLimit = text.Length - subText.Length;
+            for (int textIndex = 0; textIndex <= outOfBoundLimit; textIndex++)
+            {
+                for (var subTextIndex = 0; subTextIndex < subText.Length; subTextIndex++)
                 {
-                    if (text[i + q] != subText[q])
+                    if (text[textIndex + subTextIndex] != subText[subTextIndex])
                     {
                         break;
                     }
-                    if (q == subText.Length - 1)
+                    if (subTextIndex == subText.Length - 1)
                     {
-                        return i;
+                        return textIndex;
                     }
                 }
             }
