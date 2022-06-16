@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace indexOf
 {
@@ -7,8 +8,9 @@ namespace indexOf
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            const string input = "ahmad";
+            const string input = "aaaaaaaaaabaaaaand";
 
+            // TEST
             string subtext = "h";
             Console.WriteLine(input + "/" + subtext + "\t\t" +IndexOf(input, subtext));
 
@@ -18,27 +20,52 @@ namespace indexOf
             subtext = "y";
             Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
 
-            subtext = "ahmadi";
+            subtext = "aaab";
             Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
+
+            subtext = "ahmad";
+            Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
+
+            subtext = null;
+            Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
+
+            subtext = "hmad";
+            Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
+
+            subtext = "d";
+            Console.WriteLine(input + "/" + subtext + "\t\t" + IndexOf(input, subtext));
+
 
         }
 
 
         public static int IndexOf(string text, string subText)
         {
+            if (text == null || subText == null) return -1;
             if (subText.Length > text.Length) return -1;
-            for (int i = 0; i < text.Length && i < (text.Length - subText.Length +1); i++)
+            if (subText.Length == 0 && text.Length == 0) return 0;
+            if (text == subText) return 0;
+
+            // if the textIndex reaches this point no need to continue, since the subText won't match anyway because there is no room for "subText" to exist within "text"
+            int outOfBoundLimit = text.Length - subText.Length;
+            int firstMatchIndex = -1;
+            int subTextIndex = 0;
+            for (int textIndex = 0; textIndex <= outOfBoundLimit; textIndex++)
             {
-                for (var q = 0; q < subText.Length; q++)
+                if (text[textIndex] == subText[subTextIndex])
                 {
-                    if (text[i + q] != subText[q])
-                    {
-                        break;
-                    }
-                    if (q == subText.Length - 1)
-                    {
-                        return i;
-                    }
+                    if(firstMatchIndex == -1)
+                        firstMatchIndex = textIndex;
+                    subTextIndex++;
+                }
+                else
+                {
+                    subTextIndex = 0;
+                    firstMatchIndex = -1;
+                }
+                if (subTextIndex == subText.Length)
+                {
+                    return firstMatchIndex;
                 }
             }
             return -1;
