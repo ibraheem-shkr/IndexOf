@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace indexOf
 {
@@ -7,7 +8,7 @@ namespace indexOf
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            const string input = "ahmad";
+            const string input = "aaaaaaaaaabaaaaand";
 
             // TEST
             string subtext = "h";
@@ -40,24 +41,31 @@ namespace indexOf
 
         public static int IndexOf(string text, string subText)
         {
-            if (String.IsNullOrEmpty(subText) || String.IsNullOrEmpty(subText)) return -1;
+            if (text == null || subText == null) return -1;
             if (subText.Length > text.Length) return -1;
+            if (subText.Length == 0 && text.Length == 0) return 0;
             if (text == subText) return 0;
 
             // if the textIndex reaches this point no need to continue, since the subText won't match anyway because there is no room for "subText" to exist within "text"
             int outOfBoundLimit = text.Length - subText.Length;
+            int firstMatchIndex = -1;
+            int subTextIndex = 0;
             for (int textIndex = 0; textIndex <= outOfBoundLimit; textIndex++)
             {
-                for (var subTextIndex = 0; subTextIndex < subText.Length; subTextIndex++)
+                if (text[textIndex] == subText[subTextIndex])
                 {
-                    if (text[textIndex + subTextIndex] != subText[subTextIndex])
-                    {
-                        break;
-                    }
-                    if (subTextIndex == subText.Length - 1)
-                    {
-                        return textIndex;
-                    }
+                    if(firstMatchIndex == -1)
+                        firstMatchIndex = textIndex;
+                    subTextIndex++;
+                }
+                else
+                {
+                    subTextIndex = 0;
+                    firstMatchIndex = -1;
+                }
+                if (subTextIndex == subText.Length)
+                {
+                    return firstMatchIndex;
                 }
             }
             return -1;
