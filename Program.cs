@@ -40,16 +40,9 @@ namespace indexOf
 
         public static int IndexOf(string text, string subText)
         {
-            try
-            {
-                if (subText.Length > text.Length) return -1;
-                if (text == subText) return 0;
-            }
-            catch (NullReferenceException exception)
-            {
-                Console.WriteLine(exception.Message);
-                return -1;
-            }
+            if (String.IsNullOrEmpty(subText) || String.IsNullOrEmpty(subText)) return -1;
+            if (subText.Length > text.Length) return -1;
+            if (text == subText) return 0;
 
             // if the textIndex reaches this point no need to continue, since the subText won't match anyway because there is no room for "subText" to exist within "text"
             int outOfBoundLimit = text.Length - subText.Length;
